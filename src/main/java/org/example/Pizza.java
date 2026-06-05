@@ -10,6 +10,23 @@ public class Pizza {
     private int weigth;
     private String ingredients;
 
+    public Pizza(String name, int diametr, int weigth, BigDecimal currentPrice) {
+        this.name = name;
+        this.diametr = diametr;
+        this.weigth = weigth;
+        this.currentPrice = currentPrice;
+
+    }
+    public Pizza(String name, int diametr, int weigth, BigDecimal currentPrice,
+                      String ingredients) {
+        this.name = name;
+        this.diametr = diametr;
+        this.weigth = weigth;
+        this.currentPrice = currentPrice;
+        this.ingredients = ingredients;
+
+    }
+
     public String getName() {
         return name;
     }
@@ -23,6 +40,6 @@ public class Pizza {
     }
 
     public void getDescription() {
-        System.out.printf("Пицца %s см%d, цена: %fр", name, diametr, currentPrice);
+        System.out.printf("Пицца %s %dсм, цена: %fр", name, diametr, currentPrice);
     }
 }
