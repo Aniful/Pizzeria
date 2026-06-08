@@ -12,7 +12,7 @@ public class Courier {
     private static Long counterID = 0l;
 
     public Courier(String name, String numberPhone) {
-        this.id = ++counterID;
+        id = ++counterID;
         this.name = name;
         this.numberPhone = numberPhone;
     }

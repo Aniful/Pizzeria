@@ -13,7 +13,7 @@ public class Pizza {
     private static Long counterID = 0l;
 
     public Pizza(String name, int diametr, int weigth, BigDecimal currentPrice) {
-        this.id = ++counterID;
+        id = ++counterID;
         this.name = name;
         this.diametr = diametr;
         this.weigth = weigth;

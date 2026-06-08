@@ -13,6 +13,20 @@ public class Order {
     private Address address;
     private  Status status;
 
+    private static Long counterID = 0l;
+
+    public Order(Client client, Address address, List structure) {
+        id = ++counterID;
+        this.client = client;
+        this.address = address;
+        this.structure = structure;
+        client.addAddress(address);
+    }
+
+    public String getAddress() {
+        return address.getFullAddress();
+    }
+
     public enum Status {
         NEW,
         COOKING,
