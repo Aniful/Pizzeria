@@ -19,5 +19,5 @@ public class Courier {
 
     public String getName() { return name; }
     public String getNumberPhone() { return numberPhone; }
-    
+
 }
