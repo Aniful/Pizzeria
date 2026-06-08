@@ -10,4 +10,20 @@ public class Order {
     private Client client;
     private List structure;
     private Courier courier;
+    private Address address;
+    private  Status status;
+
+    public enum Status {
+        NEW,
+        COOKING,
+        DELIVERING,
+        COMPLETED
+    }
+
+    public Status getStatus() { return status; }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }
+
