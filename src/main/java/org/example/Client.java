@@ -6,7 +6,7 @@ import java.util.List;
 public class Client {
     private Long id;
     private String name;
-    private String clientNumber;
+    private String numberPhone;
     private LocalDate biethDate;
     private List addressHistory;
 
@@ -14,7 +14,7 @@ public class Client {
         return name;
     }
 
-    public String getClientNumber() {
-        return clientNumber;
+    public String getNumberPhone() {
+        return numberPhone;
     }
 }
