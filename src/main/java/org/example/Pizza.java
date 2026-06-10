@@ -34,7 +34,7 @@ public class Pizza {
     public String getIngredients() { return ingredients; }
 
     public void getDescription() {
-        System.out.printf("Пицца %s %dсм, %dг. Цена: %fр", name, diametr, weigth, currentPrice);
+        System.out.printf("Пицца %s %dсм, %dг. Цена: %fр \n", name, diametr, weigth, currentPrice);
     }
 
     public void setName(String name) {

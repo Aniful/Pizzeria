@@ -15,9 +15,17 @@ public class Courier {
         id = ++counterID;
         this.name = name;
         this.numberPhone = numberPhone;
+        isAvailable = true;
+
     }
 
     public String getName() { return name; }
     public String getNumberPhone() { return numberPhone; }
+    public boolean getIsAvailable() { return isAvailable; }
+    public Long getId() { return id; }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
 
 }
