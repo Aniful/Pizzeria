@@ -7,7 +7,7 @@ public class Order {
     private Long id;
     private Data data;
     private Client client;
-    private List structure;
+    private List items;
     private Long courierID;
     private Address address;
     private  Status status;
@@ -18,14 +18,19 @@ public class Order {
         NEW,
         COOKING,
         DELIVERING,
-        COMPLETED
+        COMPLETED,
+        CANCELLED;
+
+        public boolean isDELIVERING() {
+            return this == DELIVERING;
+        }
     }
 
-    public Order(Client client, Address address, List structure) {
+    public Order(Client client, Address address, List items) {
         id = ++counterID;
         this.client = client;
         this.address = address;
-        this.structure = structure;
+        this.items = items;
         client.addAddress(address);
 
         status = Status.NEW;
@@ -33,6 +38,7 @@ public class Order {
 
     public String getAddress() { return address.getFullAddress(); }
     public Status getStatus() { return status; }
+    public Long getCourierID() { return courierID; }
 
     public void setStatus(Status status) {
         this.status = status;
