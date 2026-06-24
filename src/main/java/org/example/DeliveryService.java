@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeliveryService {
-    private List<Courier> couriers = new ArrayList();
+    private List<Courier> couriers = new ArrayList<>();
 
     public void addCourier(String name, String numberPhone) {
         Courier courier = new Courier(name, numberPhone);
@@ -41,11 +41,20 @@ public class DeliveryService {
         return availableCourier;
     }
 
+    public void startDelivery(Order order) {
+        if (order.getStatus().isCOOKING()) {
+            order.setStatus(Order.Status.DELIVERING);
+        }
+    }
+
     public void completeDelivery(Order order) {
         if (order.getStatus().isDELIVERING()) {
             order.setStatus(Order.Status.COMPLETED);
             Courier courier = findCourierByID( order.getCourierID() );
             courier.setAvailable(true);
+            System.out.printf("Заказ №%s доставлен!\n", order.getId());
         }
     }
+
+
 }

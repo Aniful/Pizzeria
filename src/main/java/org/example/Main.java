@@ -22,10 +22,17 @@ public class Main {
         Order order2 = new Order(andry, address1, itemsOrder1);
 
         DeliveryService deliveryService = new DeliveryService();
+        OrderService orderService = new OrderService();
+
+        order1.setStatus(Order.Status.CONFIRMED);
+
         deliveryService.addCourier("Kiril", "85673338987");
         deliveryService.assignCourier(order1);
 
+        orderService.sendCook(order1);
+        deliveryService.startDelivery(order1);
 
+        deliveryService.completeDelivery(order1);
 
     }
 }

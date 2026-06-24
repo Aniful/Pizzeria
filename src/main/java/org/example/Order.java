@@ -16,10 +16,19 @@ public class Order {
 
     public enum Status {
         NEW,
+        CONFIRMED,
         COOKING,
         DELIVERING,
         COMPLETED,
         CANCELLED;
+
+        public  boolean isCONFIRMED() {
+            return  this == CONFIRMED;
+        }
+
+        public  boolean isCOOKING() {
+            return  this == COOKING;
+        }
 
         public boolean isDELIVERING() {
             return this == DELIVERING;
@@ -39,6 +48,7 @@ public class Order {
     public String getAddress() { return address.getFullAddress(); }
     public Status getStatus() { return status; }
     public Long getCourierID() { return courierID; }
+    public Long getId() { return id; }
 
     public void setStatus(Status status) {
         this.status = status;
