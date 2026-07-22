@@ -37,7 +37,9 @@ public class Main {
 //        deliveryService.completeDelivery(order1);
         OrderService orderService = new OrderService();
         DeliveryService deliveryService = new DeliveryService();
-        ClientService clientService = new ClientService();
+
+        ClientRepository clientRepository = new ClientRepository();
+        ClientService clientService = new ClientService(clientRepository);
 
         while (true) {
             System.out.println("_____________________________________________________________");

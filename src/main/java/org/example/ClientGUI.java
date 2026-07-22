@@ -6,6 +6,7 @@ public class ClientGUI {
     private ClientService clientService;
     private OrderService orderService;
     private Scanner scanner;
+    private Client currentСlient;
 
     public ClientGUI(ClientService clientService, OrderService orderService){
         this.clientService = clientService;
@@ -23,6 +24,7 @@ public class ClientGUI {
             System.out.println("1. Сделать заказ");
             System.out.println("2. Посмотреть меню");
             System.out.println("0. Выйти");
+            System.out.println("_____________________________________________________________");
 
              switch (scanner.nextInt()) {
                 case 1:
