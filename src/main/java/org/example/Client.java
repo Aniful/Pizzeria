@@ -12,20 +12,18 @@ public class Client {
     private Date biethDate;
     private List<Address> addressHistory = new ArrayList<>();
 
-    private static Long counterID = 0l;
 
     public Client(String name, String numberPhone) {
-        id = ++counterID;
         this.name = name;
         this.numberPhone = numberPhone;
     }
 
-    public String getName() {
-        return name;
-    }
+    public Long getId() { return id; }
+    public String getName() { return name; }
+    public String getNumberPhone() { return numberPhone; }
 
-    public String getNumberPhone() {
-        return numberPhone;
+    void setId(Long id) {
+        this.id = id;
     }
 
     public void setBiethDate(Date biethDate) {
