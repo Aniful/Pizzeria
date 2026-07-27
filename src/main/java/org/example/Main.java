@@ -12,8 +12,10 @@ public class Main {
     static void main() {
         Scanner scanner = new Scanner(System.in);
 
-//        Pizza margarita = new Pizza("Маргарита", 25, 400, new BigDecimal("450"));
-//        margarita.getDescription();
+          Pizza margarita = new Pizza("Маргарита", 25, 400, new BigDecimal("450"), "Помидор, Сыр, Специи");
+          Pizza hot = new Pizza("Острая", 30, 340, new BigDecimal("400"), "Лук, Перец, Чеснок");
+
+//        System.out.println(margarita.getDescription());
 //
 //        Client andry = new Client("Andry", "89002008787");
 //        Address address1 = new Address("Пермь", "Ленина", "1", "7");
@@ -43,6 +45,8 @@ public class Main {
 
         PizzaRepository pizzaRepository = new PizzaRepository();
         PizzaService pizzaService = new PizzaService(pizzaRepository);
+        pizzaRepository.save(margarita);
+        pizzaRepository.save(hot);
 
         while (true) {
             System.out.println("_____________________________________________________________");

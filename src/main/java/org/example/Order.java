@@ -6,12 +6,12 @@ import java.util.List;
 public class Order {
     private Long id;
     private Data data;
-    private Client client;
+    private Long clientId;
     private List items;
-    private Long courierID;
     private Address address;
     private  Status status;
 
+    private Long courierID;
     private static Long counterID = 0l;
 
     public enum Status {
@@ -35,12 +35,11 @@ public class Order {
         }
     }
 
-    public Order(Client client, Address address, List items) {
+    public Order(Long clientId, Address address, List items) {
         id = ++counterID;
-        this.client = client;
+        this.clientId = clientId;
         this.address = address;
         this.items = items;
-        client.addAddress(address);
 
         status = Status.NEW;
     }

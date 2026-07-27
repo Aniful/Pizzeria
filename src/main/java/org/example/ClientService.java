@@ -18,4 +18,15 @@ public class ClientService {
         Client client = new Client(name, numberPhone);
         return clientRepository.save(client);
     }
+
+    public Address createAddress(String city, String street, String home, String apartment) {
+        Address address = new Address(city, street,home, apartment);
+
+    }
+
+    public void addAddressToClient(Long clientId, Address address) {
+        Client client = clientRepository.findById(clientId);
+        client.addAddress(address);
+        clientRepository.save(client);
+    }
 }

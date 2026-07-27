@@ -31,12 +31,14 @@ public class Pizza {
     public String toString() {
         return id + " " + name;
     }
+
+    public Long getId() { return id; }
     public String getName() { return name; }
     public BigDecimal getCurrentPrice() { return currentPrice; }
     public String getIngredients() { return ingredients; }
 
     public String getDescription() {
-        return String.format("Пицца %s %dсм, %dг. Цена: %fр \n", name, diametr, weigth, currentPrice);
+        return String.format("Пицца %s %dсм, %dг. Цена: %.2fр", name, diametr, weigth, currentPrice);
     }
 
     public void setName(String name) {

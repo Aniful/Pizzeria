@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -77,7 +78,41 @@ public class ClientGUI {
     public void makeOrder() {
         System.out.println("_____________________________________________________________");
         System.out.println("МЕНЮ ПИЦЦЕРИИ.");
-        System.out.println(pizzaService.getMenu());
-        System.out.println("Введите номера пицц через запятую:");
+        List<Pizza> menu = pizzaService.getMenu();
+        for (Pizza position : menu) {
+            System.out.println(position.getId() + " " + position.getDescription());
+        }
+        System.out.print("Введите номера пицц через запятую (пробелы по желанию):");
+        String userChoice = scanner.nextLine();
+        System.out.println("_____________________________________________________________");
+
+        //парсинг
+        userChoice.replaceAll("\\s+", "");
+        List<String> items = List.of( userChoice.split(",") );
+
+        List<Address> addressHistory = currentClient.getAddressHistory();
+        if (addressHistory.isEmpty()) {
+            System.out.println("У вас еще нет ни одного адреса доставки, давайте это исправим");
+            addAddress();
+        }
+        System.out.println("Укажите адрес доставки: ");
+        String address = scanner.nextLine();
+
+//        orderService.makeOrder(currentClient.getId(), address, items);
+        // String city, String street, String home, String apartment)
+    }
+
+    public void addAddress() {
+        System.out.println("Введите город:");
+        String city = scanner.nextLine();
+        System.out.println("Введите улицу:");
+        String street = scanner.nextLine();
+        System.out.println("Введите номер дома:");
+        String home = scanner.nextLine();
+        System.out.println("Введите номер квартиры:");
+        String apartment = scanner.nextLine();
+
+        Address address = clientService.createAddress(city, street, home, apartment);
+        clientService.addAddressToClient(currentClient.getId(), address);
     }
 }
