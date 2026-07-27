@@ -10,10 +10,8 @@ public class Pizza {
     private int weigth;
     private String ingredients;
 
-    private static Long counterID = 0l;
 
     public Pizza(String name, int diametr, int weigth, BigDecimal currentPrice) {
-        id = ++counterID;
         this.name = name;
         this.diametr = diametr;
         this.weigth = weigth;
@@ -29,18 +27,26 @@ public class Pizza {
 
     }
 
+    @Override
+    public String toString() {
+        return id + " " + name;
+    }
     public String getName() { return name; }
     public BigDecimal getCurrentPrice() { return currentPrice; }
     public String getIngredients() { return ingredients; }
 
-    public void getDescription() {
-        System.out.printf("Пицца %s %dсм, %dг. Цена: %fр \n", name, diametr, weigth, currentPrice);
+    public String getDescription() {
+        return String.format("Пицца %s %dсм, %dг. Цена: %fр \n", name, diametr, weigth, currentPrice);
     }
 
     public void setName(String name) {
         if (name != "") {
             this.name = name;
         }
+    }
+
+    public  void setId(Long id) {
+        this.id = id;
     }
 
     public void setCurrentPrice(BigDecimal currentPrice) {

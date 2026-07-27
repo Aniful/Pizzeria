@@ -6,36 +6,42 @@ import java.util.Scanner;
 public class ClientGUI {
     private ClientService clientService;
     private OrderService orderService;
+    private PizzaService pizzaService;
     private Scanner scanner;
     private Client currentClient;
 
-    public ClientGUI(ClientService clientService, OrderService orderService){
+    public ClientGUI(ClientService clientService, OrderService orderService, PizzaService pizzaService) {
         this.clientService = clientService;
         this.orderService = orderService;
+        this.pizzaService = pizzaService;
         this.scanner = new Scanner(System.in);
 
     }
 
-    public void Start() {
+    public void start() {
         registerOrLogin();
 
         while (true) {
             System.out.println("_____________________________________________________________");
-            System.out.println("Добро пожаловать!");
+            System.out.println("Здесть вы можете:");
             System.out.println("1. Сделать заказ");
-            System.out.println("2. Посмотреть меню");
+            System.out.println("2. Посмотреть состав пиццы");
             System.out.println("0. Выйти");
             System.out.println("_____________________________________________________________");
 
-             switch (scanner.nextInt()) {
+            int userChoiсe = scanner.nextInt();
+            scanner.nextLine();
+            switch (userChoiсe) {
                 case 1:
-                    System.out.println("Создание заказа");
+                    makeOrder();
                     break;
-                 case 2:
-                     break;
+                case 2:
+                    break;
                 case 0:
                     return;
-            };
+                default:
+                    System.out.println("Введенного значения не предусмотрено");
+            }
 
         }
     }
@@ -51,8 +57,8 @@ public class ClientGUI {
         if (client.isEmpty()) {
             registerClient(numberPhone);
         } else {
-            Client foundClient = client.get();
-            System.out.println("Добро пожаловать, " + foundClient.getName());
+            currentClient = client.get();
+            System.out.println("Добро пожаловать, " + currentClient.getName());
         }
     }
 
@@ -66,7 +72,12 @@ public class ClientGUI {
 
         System.out.println("_____________________________________________________________");
         System.out.println("Регистрация прошла успешно!");
-        System.out.println("_____________________________________________________________");
+    }
 
+    public void makeOrder() {
+        System.out.println("_____________________________________________________________");
+        System.out.println("МЕНЮ ПИЦЦЕРИИ.");
+        System.out.println(pizzaService.getMenu());
+        System.out.println("Введите номера пицц через запятую:");
     }
 }

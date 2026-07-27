@@ -10,7 +10,7 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     static void main() {
-        Scanner scaner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
 //        Pizza margarita = new Pizza("Маргарита", 25, 400, new BigDecimal("450"));
 //        margarita.getDescription();
@@ -41,6 +41,9 @@ public class Main {
         ClientRepository clientRepository = new ClientRepository();
         ClientService clientService = new ClientService(clientRepository);
 
+        PizzaRepository pizzaRepository = new PizzaRepository();
+        PizzaService pizzaService = new PizzaService(pizzaRepository);
+
         while (true) {
             System.out.println("_____________________________________________________________");
             System.out.println("Выберите пользователя введя соотвествующий номер: ");
@@ -50,15 +53,27 @@ public class Main {
             System.out.println("4. Администратор");
             System.out.println("_____________________________________________________________");
 
-            int userRole = switch (scaner.nextInt()) {
+            int userChoice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (userChoice) {
                 case 1:
-                    ClientGUI clientGUI = new ClientGUI(clientService, orderService);
-                    clientGUI.Start();
+                    ClientGUI clientGUI = new ClientGUI(clientService, orderService, pizzaService);
+                    clientGUI.start();
+                    break;
                 case 2:
-                    yield 32;
+
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+                    AdminGUI adminGUI = new AdminGUI(pizzaService);
+                    adminGUI.start();
+                    break;
                 default:
-                    yield 0;
-            };
+                    System.out.println("Введенного значения не предусмотрено");
+            }
         }
 
     }
