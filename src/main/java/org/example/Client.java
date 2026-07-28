@@ -11,6 +11,7 @@ public class Client {
     private String numberPhone;
     private Date biethDate;
     private List<Address> addressHistory = new ArrayList<>();
+    private Long counterAddressId = 0l;
 
 
     public Client(String name, String numberPhone) {
@@ -33,6 +34,7 @@ public class Client {
 
     public void addAddress(Address address) {
         if (addressHistory.contains(address) == false) {
+            address.setId(++counterAddressId);
             addressHistory.add(address);
         }
     }

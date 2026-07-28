@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -86,23 +87,41 @@ public class ClientGUI {
         String userChoice = scanner.nextLine();
         System.out.println("_____________________________________________________________");
 
-        //парсинг
-        userChoice.replaceAll("\\s+", "");
-        List<String> items = List.of( userChoice.split(",") );
+        userChoice = userChoice.replaceAll("\\s+", "");
+        List<String> items = Arrays.asList( userChoice.split(",") );
 
-        List<Address> addressHistory = currentClient.getAddressHistory();
-        if (addressHistory.isEmpty()) {
-            System.out.println("У вас еще нет ни одного адреса доставки, давайте это исправим");
-            addAddress();
-        }
-        System.out.println("Укажите адрес доставки: ");
-        String address = scanner.nextLine();
-
-//        orderService.makeOrder(currentClient.getId(), address, items);
-        // String city, String street, String home, String apartment)
+        Address address = getAddress();
     }
 
-    public void addAddress() {
+    public Address getAddress() {
+        List<Address> addressHistory = currentClient.getAddressHistory();
+        if (addressHistory.isEmpty()) {
+            System.out.println("Не нашли ни одного адреса для доставки, давайте это исправим");
+            return addAddress();
+        } else {
+            System.out.println("Выберите адрес доставки:");
+            for (int i = 0; i < addressHistory.size(); i++) {
+                System.out.println( (i + 1) + ". " + addressHistory.get(i).getFullAddress());
+            }
+
+            System.out.println("0. Добавить новый адрес");
+            int userChoice = scanner.nextInt();
+            scanner.nextLine();
+
+            if (userChoice == 0) {
+                System.out.println("Начнем создание нового адреса");
+                 return addAddress();
+            } else if (userChoice < 0 || userChoice > addressHistory.size()) {
+                System.out.println("Введенного значения не предусмотрено. Попробуйте еще раз");
+                return  getAddress();
+            }
+
+            int addressIndex = userChoice  - 1;
+            return addressHistory.get(addressIndex);
+        }
+    }
+
+    public Address addAddress() {
         System.out.println("Введите город:");
         String city = scanner.nextLine();
         System.out.println("Введите улицу:");
@@ -114,5 +133,7 @@ public class ClientGUI {
 
         Address address = clientService.createAddress(city, street, home, apartment);
         clientService.addAddressToClient(currentClient.getId(), address);
+        System.out.println("Добавлен адрес: " + address.getFullAddress() + ". Он будет использован в текущем заказе");
+        return address;
     }
 }

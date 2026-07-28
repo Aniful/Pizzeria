@@ -20,13 +20,17 @@ public class ClientService {
     }
 
     public Address createAddress(String city, String street, String home, String apartment) {
-        Address address = new Address(city, street,home, apartment);
-
+        return new Address(city, street,home, apartment);
     }
 
     public void addAddressToClient(Long clientId, Address address) {
-        Client client = clientRepository.findById(clientId);
-        client.addAddress(address);
-        clientRepository.save(client);
+        Optional<Client> optionalClient = clientRepository.findById(clientId);
+        if (optionalClient.isEmpty()) {
+            System.out.println("При попытке добавить адрес клиенту. Клиент не найден.");
+        } else {
+            Client client = optionalClient.get();
+            client.addAddress(address);
+            clientRepository.save(client);
+        }
     }
 }

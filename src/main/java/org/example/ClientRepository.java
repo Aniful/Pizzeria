@@ -15,8 +15,14 @@ public class ClientRepository {
             return result;
     }
 
+    public Optional<Client> findById(Long clientId) {
+        return Optional.ofNullable(clients.get(clientId));
+    }
+
     public Client save(Client client) {
-        client.setId(++counterID);
+        if (client.getId() == null) {
+            client.setId(++counterID);
+        }
         clients.put(client.getId(), client);
         return client;
     }
