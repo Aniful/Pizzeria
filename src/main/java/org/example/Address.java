@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Objects;
+
 public class Address {
     private Long   id;
     private String city;
@@ -29,5 +31,9 @@ public class Address {
     }
 
 //    @Override
-//    public equals()
+//    public boolean equals(Object obj) {
+//        if (this == obj) return true;
+//        if (obj == null || getClass() != obj.getClass()) return false;
+//        Address address = (Address) obj;
+//    }
 }

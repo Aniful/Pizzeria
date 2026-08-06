@@ -22,8 +22,8 @@ public class DeliveryService {
         Courier availableCourier = findAvailableCourier();
 
         if (availableCourier != null) {
-            order.setCounterID(availableCourier.getId());
-            availableCourier.setAvailable(false);
+//            order.setCounterID(availableCourier.getId());
+//            availableCourier.setAvailable(false);
         } else {
             System.out.println("Свободные курьеры отсутствуют");
         }
@@ -50,11 +50,9 @@ public class DeliveryService {
     public void completeDelivery(Order order) {
         if (order.getStatus().isDELIVERING()) {
             order.setStatus(Order.Status.COMPLETED);
-            Courier courier = findCourierByID( order.getCourierID() );
-            courier.setAvailable(true);
-            System.out.printf("Заказ №%s доставлен!\n", order.getId());
+//            Courier courier = findCourierByID( order.getCourierID() );
+//            courier.setAvailable(true);
+//            System.out.printf("Заказ №%s доставлен!\n", order.getId());
         }
     }
-
-
 }

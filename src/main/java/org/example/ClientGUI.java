@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class ClientGUI {
     private ClientService clientService;
@@ -31,9 +32,9 @@ public class ClientGUI {
             System.out.println("0. Выйти");
             System.out.println("_____________________________________________________________");
 
-            int userChoiсe = scanner.nextInt();
+            int userChoice = scanner.nextInt();
             scanner.nextLine();
-            switch (userChoiсe) {
+            switch (userChoice) {
                 case 1:
                     makeOrder();
                     break;
@@ -80,17 +81,30 @@ public class ClientGUI {
         System.out.println("_____________________________________________________________");
         System.out.println("МЕНЮ ПИЦЦЕРИИ.");
         List<Pizza> menu = pizzaService.getMenu();
-        for (Pizza position : menu) {
-            System.out.println(position.getId() + " " + position.getDescription());
+        for (int i = 0; i < menu.size(); i++) {
+            System.out.println((i + 1) + " " + menu.get(i).getDescription());
         }
+
         System.out.print("Введите номера пицц через запятую (пробелы по желанию):");
         String userChoice = scanner.nextLine();
         System.out.println("_____________________________________________________________");
 
         userChoice = userChoice.replaceAll("\\s+", "");
-        List<String> items = Arrays.asList( userChoice.split(",") );
+        if (userChoice.isEmpty()) {
+            System.out.println("Вы не выбрали ни одной пиццы. Вернемся в меню выбора.");
+            return;
+        }
+        List<String> userChoiceToArray = Arrays.asList( userChoice.split(",") );
+
+        List<Pizza> items = userChoiceToArray.stream()
+                .filter(str -> !str.isEmpty())
+                .map(item -> menu.get( Integer.parseInt(item) - 1) )
+                .collect(Collectors.toList());
 
         Address address = getAddress();
+        Order order = orderService.makeOrder(currentClient.getId(), address, items);
+        System.out.println(order.getDescription());
+        System.out.println("Создание завершено, вы можете сделить за статусами готовности");
     }
 
     public Address getAddress() {
@@ -134,6 +148,7 @@ public class ClientGUI {
         Address address = clientService.createAddress(city, street, home, apartment);
         clientService.addAddressToClient(currentClient.getId(), address);
         System.out.println("Добавлен адрес: " + address.getFullAddress() + ". Он будет использован в текущем заказе");
+        System.out.println("_____________________________________________________________");
         return address;
     }
 }

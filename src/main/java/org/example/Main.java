@@ -37,7 +37,8 @@ public class Main {
 //        deliveryService.startDelivery(order1);
 //
 //        deliveryService.completeDelivery(order1);
-        OrderService orderService = new OrderService();
+        OrderRepository orderRepository = new OrderRepository();
+        OrderService orderService = new OrderService(orderRepository);
         DeliveryService deliveryService = new DeliveryService();
 
         ClientRepository clientRepository = new ClientRepository();

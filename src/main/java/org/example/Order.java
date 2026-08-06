@@ -1,18 +1,17 @@
 package org.example;
 
 import javax.xml.crypto.Data;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Order {
     private Long id;
     private Data data;
     private Long clientId;
-    private List items;
+    private List<Pizza> items;
     private Address address;
-    private  Status status;
-
-    private Long courierID;
-    private static Long counterID = 0l;
+    private Status status;
+    private BigDecimal totalPrice;
 
     public enum Status {
         NEW,
@@ -35,26 +34,27 @@ public class Order {
         }
     }
 
-    public Order(Long clientId, Address address, List items) {
-        id = ++counterID;
+    public Order(Long clientId, Address address, List<Pizza> items) {
         this.clientId = clientId;
         this.address = address;
         this.items = items;
+        this.totalPrice = items.stream()
+                .map(Pizza::getCurrentPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         status = Status.NEW;
     }
 
+    public BigDecimal getTotalPrice() { return totalPrice; }
     public String getAddress() { return address.getFullAddress(); }
     public Status getStatus() { return status; }
-    public Long getCourierID() { return courierID; }
     public Long getId() { return id; }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+    public void setStatus(Status status) { this.status = status; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setCounterID(Long counterID) {
-        this.courierID = counterID;
+    public String getDescription() {
+        return String.format("Заказ №%d, будет доставлен по адресу: %s", id, address.getFullAddress());
     }
 }
 

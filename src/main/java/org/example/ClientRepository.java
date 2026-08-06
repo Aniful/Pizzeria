@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public class ClientRepository {
     private HashMap<Long, Client> clients = new HashMap<>();
-    private static Long counterID = 0l;
+    private Long counterID = 0l;
 
     public Optional<Client> findByPhone(String numberPhone) {
             Optional<Client> result = clients.values().stream()

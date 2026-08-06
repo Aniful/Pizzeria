@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 public class PizzaRepository {
     private Map<Long, Pizza> pizzas = new HashMap<>();
-    private Long id;
     private Long counterID = 0l;
 
     public List<Pizza> getMenu() {
@@ -17,8 +16,10 @@ public class PizzaRepository {
     }
 
     public Pizza save(Pizza pizza) {
-        pizza.setId(++counterID);
-        pizzas.put(counterID, pizza);
+        if (pizza.getId() == null) {
+            pizza.setId(++counterID);
+        }
+        pizzas.put(pizza.getId(), pizza);
         return pizza;
     }
 

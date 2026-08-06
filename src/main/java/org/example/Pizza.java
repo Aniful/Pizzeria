@@ -10,14 +10,6 @@ public class Pizza {
     private int weigth;
     private String ingredients;
 
-
-    public Pizza(String name, int diametr, int weigth, BigDecimal currentPrice) {
-        this.name = name;
-        this.diametr = diametr;
-        this.weigth = weigth;
-        this.currentPrice = currentPrice;
-
-    }
     public Pizza(String name, int diametr, int weigth, BigDecimal currentPrice, String ingredients) {
         this.name = name;
         this.diametr = diametr;
