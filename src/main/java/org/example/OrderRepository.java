@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 public class OrderRepository {
     private HashMap<Long, Order> orders = new HashMap();
@@ -13,4 +14,6 @@ public class OrderRepository {
         orders.put(order.getId(), order);
         return order;
     }
+
+    public Optional<Order> findById(Long id) { return Optional.ofNullable(orders.get(id)); }
 }

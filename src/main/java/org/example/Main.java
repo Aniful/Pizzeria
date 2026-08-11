@@ -46,6 +46,9 @@ public class Main {
 
         PizzaRepository pizzaRepository = new PizzaRepository();
         PizzaService pizzaService = new PizzaService(pizzaRepository);
+
+        PaymentRepository paymentRepository = new PaymentRepository();
+        PaymentService paymentService = new PaymentService(paymentRepository);
         pizzaRepository.save(margarita);
         pizzaRepository.save(hot);
 
@@ -63,7 +66,7 @@ public class Main {
 
             switch (userChoice) {
                 case 1:
-                    ClientGUI clientGUI = new ClientGUI(clientService, orderService, pizzaService);
+                    ClientGUI clientGUI = new ClientGUI(clientService, orderService, pizzaService, paymentService);
                     clientGUI.start();
                     break;
                 case 2:

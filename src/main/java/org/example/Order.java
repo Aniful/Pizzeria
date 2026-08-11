@@ -1,12 +1,12 @@
 package org.example;
 
-import javax.xml.crypto.Data;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Order {
     private Long id;
-    private Data data;
+    private LocalDateTime createdAt;
     private Long clientId;
     private List<Pizza> items;
     private Address address;
@@ -43,6 +43,7 @@ public class Order {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         status = Status.NEW;
+        this.createdAt = LocalDateTime.now();
     }
 
     public BigDecimal getTotalPrice() { return totalPrice; }

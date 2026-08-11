@@ -24,7 +24,7 @@ public class Client {
     public String getNumberPhone() { return numberPhone; }
     public List<Address> getAddressHistory() { return addressHistory; }
 
-    void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -10,15 +10,16 @@ public class ClientGUI {
     private ClientService clientService;
     private OrderService orderService;
     private PizzaService pizzaService;
+    private PaymentService paymentService;
     private Scanner scanner;
     private Client currentClient;
 
-    public ClientGUI(ClientService clientService, OrderService orderService, PizzaService pizzaService) {
+    public ClientGUI(ClientService clientService, OrderService orderService, PizzaService pizzaService, PaymentService paymentService) {
         this.clientService = clientService;
         this.orderService = orderService;
         this.pizzaService = pizzaService;
+        this.paymentService = paymentService;
         this.scanner = new Scanner(System.in);
-
     }
 
     public void start() {
@@ -36,7 +37,10 @@ public class ClientGUI {
             scanner.nextLine();
             switch (userChoice) {
                 case 1:
-                    makeOrder();
+                    Long orderId = makeOrder();
+                    if (orderId != null) {
+                        payForOrder(orderId);
+                    }
                     break;
                 case 2:
                     break;
@@ -77,7 +81,7 @@ public class ClientGUI {
         System.out.println("Регистрация прошла успешно!");
     }
 
-    public void makeOrder() {
+    public Long makeOrder() {
         System.out.println("_____________________________________________________________");
         System.out.println("МЕНЮ ПИЦЦЕРИИ.");
         List<Pizza> menu = pizzaService.getMenu();
@@ -92,7 +96,7 @@ public class ClientGUI {
         userChoice = userChoice.replaceAll("\\s+", "");
         if (userChoice.isEmpty()) {
             System.out.println("Вы не выбрали ни одной пиццы. Вернемся в меню выбора.");
-            return;
+            return null;
         }
         List<String> userChoiceToArray = Arrays.asList( userChoice.split(",") );
 
@@ -105,6 +109,7 @@ public class ClientGUI {
         Order order = orderService.makeOrder(currentClient.getId(), address, items);
         System.out.println(order.getDescription());
         System.out.println("Создание завершено, вы можете сделить за статусами готовности");
+        return order.getId();
     }
 
     public Address getAddress() {
@@ -150,5 +155,52 @@ public class ClientGUI {
         System.out.println("Добавлен адрес: " + address.getFullAddress() + ". Он будет использован в текущем заказе");
         System.out.println("_____________________________________________________________");
         return address;
+    }
+
+    public void payForOrder(Long orderId) {
+        Payment.PaymentMethod method = choosePaymentMethod();
+        Optional<Order> optionalOrder = orderService.findById(orderId);
+        if (optionalOrder.isEmpty()){
+            System.out.println("Заказ не найден при попытке оплаты.");
+            return;
+        }
+
+        Order order = optionalOrder.get();
+
+        if (order.getStatus() != Order.Status.NEW) {
+            System.out.println("Заказ уже оплачен.");
+            return;
+        }
+
+        paymentService.payForOrder(orderId, order.getTotalPrice(), method);
+    }
+
+    private Payment.PaymentMethod choosePaymentMethod() {
+        Payment.PaymentMethod method = null;
+
+        while (method == null) {
+            System.out.println("_____________________________________________________________");
+            System.out.println("Выберите способ оплаты");
+            System.out.println("1. Карта");
+            System.out.println("2. СПБ");
+            System.out.println("3. Наличные");
+
+            int userChoice = scanner.nextInt();
+            scanner.nextLine();
+            switch (userChoice) {
+                case 1:
+                    method = Payment.PaymentMethod.CARD;
+                    break;
+                case 2:
+                    method = Payment.PaymentMethod.SPB;
+                    break;
+                case 3:
+                    method = Payment.PaymentMethod.CASH;
+                    break;
+                default:
+                    System.out.println("Введенного значения не предусмотрено");
+            }
+        }
+        return method;
     }
 }

@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.List;
+import java.util.Optional;
 
 public class OrderService {
     private OrderRepository orderRepository;
@@ -8,6 +9,8 @@ public class OrderService {
     public OrderService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
     }
+
+    public Optional<Order> findById(Long id) { return orderRepository.findById(id); }
 
     public Order makeOrder(Long clientId, Address address, List<Pizza> items) {
         Order order = new Order(clientId, address, items);

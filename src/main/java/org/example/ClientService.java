@@ -13,6 +13,7 @@ public class ClientService {
     public Optional<Client> findByPhone(String numberPhone) {
         return clientRepository.findByPhone(numberPhone);
     }
+    public Optional<Client> findById(Long id) { return clientRepository.findById(id); }
 
     public Client registerClient(String name, String numberPhone) {
         Client client = new Client(name, numberPhone);

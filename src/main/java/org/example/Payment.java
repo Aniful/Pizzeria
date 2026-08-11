@@ -29,5 +29,16 @@ public class Payment {
         this.orderId = orderId;
         this.amount = amount;
         this.method = method;
+
+        this.status = Status.PENDING;
+        this.createdAt = LocalDateTime.now();
+        this.completedAt = null;
     }
+
+    public Long getId() { return id; }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }
