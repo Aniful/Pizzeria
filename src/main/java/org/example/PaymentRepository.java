@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 public class PaymentRepository {
     HashMap<Long, Payment> payments = new HashMap<>();
@@ -12,5 +13,9 @@ public class PaymentRepository {
         }
         payments.put(payment.getId(), payment);
         return payment;
+    }
+
+    public Optional<Payment> findById(Long id) {
+        return Optional.ofNullable( payments.get(id) );
     }
 }

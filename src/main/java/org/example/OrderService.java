@@ -12,6 +12,10 @@ public class OrderService {
 
     public Optional<Order> findById(Long id) { return orderRepository.findById(id); }
 
+    public Order updateOrder(Order order) {
+            return orderRepository.save(order);
+    }
+
     public Order makeOrder(Long clientId, Address address, List<Pizza> items) {
         Order order = new Order(clientId, address, items);
         orderRepository.save(order);

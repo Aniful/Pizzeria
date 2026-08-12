@@ -48,7 +48,7 @@ public class Main {
         PizzaService pizzaService = new PizzaService(pizzaRepository);
 
         PaymentRepository paymentRepository = new PaymentRepository();
-        PaymentService paymentService = new PaymentService(paymentRepository);
+        PaymentService paymentService = new PaymentService(paymentRepository, orderService);
         pizzaRepository.save(margarita);
         pizzaRepository.save(hot);
 

@@ -36,9 +36,19 @@ public class Payment {
     }
 
     public Long getId() { return id; }
+    public PaymentMethod getMethod() { return method; }
+    public Status getStatus() { return status; }
+    public BigDecimal getAmount() { return amount; }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setCompletedAt(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
+    }
 }

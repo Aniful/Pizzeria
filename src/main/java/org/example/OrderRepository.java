@@ -15,5 +15,7 @@ public class OrderRepository {
         return order;
     }
 
-    public Optional<Order> findById(Long id) { return Optional.ofNullable(orders.get(id)); }
+    public Optional<Order> findById(Long id) {
+        return Optional.ofNullable( orders.get(id) );
+    }
 }

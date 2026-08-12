@@ -161,18 +161,23 @@ public class ClientGUI {
         Payment.PaymentMethod method = choosePaymentMethod();
         Optional<Order> optionalOrder = orderService.findById(orderId);
         if (optionalOrder.isEmpty()){
-            System.out.println("Заказ не найден при попытке оплаты.");
+            System.out.println("При попытке оплаты заказ не найден.");
             return;
         }
 
         Order order = optionalOrder.get();
 
         if (order.getStatus() != Order.Status.NEW) {
-            System.out.println("Заказ уже оплачен.");
+            System.out.println("Заказ не может быть оплачен. Его статус: " + order.getStatus());
             return;
         }
 
-        paymentService.payForOrder(orderId, order.getTotalPrice(), method);
+        Payment payment = paymentService.payForOrder(orderId, order.getTotalPrice(), method);
+        System.out.println("_____________________________________________________________");
+        System.out.println("В процессе оплаты ...");
+        paymentService.processPayment(payment, order);
+        System.out.println("Заказ №" + orderId + " успешно подтвержден и оплачен.");
+        System.out.println("Возвращаемся в главное меню");
     }
 
     private Payment.PaymentMethod choosePaymentMethod() {
