@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 public class OrderRepository {
@@ -17,5 +18,11 @@ public class OrderRepository {
 
     public Optional<Order> findById(Long id) {
         return Optional.ofNullable( orders.get(id) );
+    }
+
+    public List<Order> getOrdersByStatusForKitchen() {
+        return orders.values().stream()
+                .filter(order -> order.getStatus() == Order.Status.CONFIRMED || order.getStatus() == Order.Status.COOKING)
+                .toList();
     }
 }

@@ -70,7 +70,8 @@ public class Main {
                     clientGUI.start();
                     break;
                 case 2:
-
+                    KitchenUI kitchenUI = new KitchenUI(orderService);
+                    kitchenUI.start();
                     break;
                 case 3:
 

@@ -29,7 +29,8 @@ public class ClientGUI {
             System.out.println("_____________________________________________________________");
             System.out.println("Здесть вы можете:");
             System.out.println("1. Сделать заказ");
-            System.out.println("2. Посмотреть состав пиццы");
+            System.out.println("2. Мои заказы");
+            System.out.println("3. Посмотреть состав пиццы");
             System.out.println("0. Выйти");
             System.out.println("_____________________________________________________________");
 
@@ -69,7 +70,7 @@ public class ClientGUI {
         }
     }
 
-    public void registerClient(String numberPhone) {
+    private void registerClient(String numberPhone) {
         System.out.println("_____________________________________________________________");
         System.out.println("Вы наш новый клиент! Подскажите как к вам обращаться:");
         System.out.println("_____________________________________________________________");
@@ -81,7 +82,7 @@ public class ClientGUI {
         System.out.println("Регистрация прошла успешно!");
     }
 
-    public Long makeOrder() {
+    private Long makeOrder() {
         System.out.println("_____________________________________________________________");
         System.out.println("МЕНЮ ПИЦЦЕРИИ.");
         List<Pizza> menu = pizzaService.getMenu();
@@ -112,7 +113,7 @@ public class ClientGUI {
         return order.getId();
     }
 
-    public Address getAddress() {
+    private Address getAddress() {
         List<Address> addressHistory = currentClient.getAddressHistory();
         if (addressHistory.isEmpty()) {
             System.out.println("Не нашли ни одного адреса для доставки, давайте это исправим");
@@ -140,7 +141,7 @@ public class ClientGUI {
         }
     }
 
-    public Address addAddress() {
+    private Address addAddress() {
         System.out.println("Введите город:");
         String city = scanner.nextLine();
         System.out.println("Введите улицу:");
@@ -157,7 +158,7 @@ public class ClientGUI {
         return address;
     }
 
-    public void payForOrder(Long orderId) {
+    private void payForOrder(Long orderId) {
         Payment.PaymentMethod method = choosePaymentMethod();
         Optional<Order> optionalOrder = orderService.findById(orderId);
         if (optionalOrder.isEmpty()){
@@ -174,7 +175,7 @@ public class ClientGUI {
 
         Payment payment = paymentService.payForOrder(orderId, order.getTotalPrice(), method);
         System.out.println("_____________________________________________________________");
-        System.out.println("В процессе оплаты ...");
+        System.out.println("Происходит оплата ...");
         paymentService.processPayment(payment, order);
         System.out.println("Заказ №" + orderId + " успешно подтвержден и оплачен.");
         System.out.println("Возвращаемся в главное меню");
