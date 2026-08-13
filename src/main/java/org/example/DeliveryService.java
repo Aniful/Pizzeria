@@ -5,6 +5,11 @@ import java.util.List;
 
 public class DeliveryService {
     private List<Courier> couriers = new ArrayList<>();
+    private CourierRepository courierRepository;
+
+    public DeliveryService(CourierRepository courierRepository){
+        this.courierRepository = courierRepository;
+    }
 
     public void addCourier(String name, String numberPhone) {
         Courier courier = new Courier(name, numberPhone);

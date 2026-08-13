@@ -3,6 +3,7 @@ package org.example;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class OrderRepository {
     private HashMap<Long, Order> orders = new HashMap();
@@ -20,9 +21,9 @@ public class OrderRepository {
         return Optional.ofNullable( orders.get(id) );
     }
 
-    public List<Order> getOrdersByStatusForKitchen() {
+    public List<Order> getOrdersByStatus(Predicate<Order> p) {
         return orders.values().stream()
-                .filter(order -> order.getStatus() == Order.Status.CONFIRMED || order.getStatus() == Order.Status.COOKING)
+                .filter(p)
                 .toList();
     }
 }

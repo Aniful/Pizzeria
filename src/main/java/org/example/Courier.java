@@ -28,4 +28,8 @@ public class Courier {
         isAvailable = available;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }

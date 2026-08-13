@@ -1,8 +1,8 @@
 package org.example;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class OrderService {
     private OrderRepository orderRepository;
@@ -29,7 +29,7 @@ public class OrderService {
         }
     }
 
-    public List<Order> getOrdersByStatusForKitchen() {
-        return orderRepository.getOrdersByStatusForKitchen();
+    public List<Order> getOrdersByStatus(Predicate<Order> p) {
+        return orderRepository.getOrdersByStatus(p);
     }
 }

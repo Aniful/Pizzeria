@@ -10,6 +10,7 @@ public class Order {
     private Long id;
     private LocalDateTime createdAt;
     private Long clientId;
+    private Long courierId;
     private List<Pizza> items;
     private Address address;
     private Status status;

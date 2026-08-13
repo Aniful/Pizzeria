@@ -1,9 +1,6 @@
 package org.example;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -39,7 +36,8 @@ public class Main {
 //        deliveryService.completeDelivery(order1);
         OrderRepository orderRepository = new OrderRepository();
         OrderService orderService = new OrderService(orderRepository);
-        DeliveryService deliveryService = new DeliveryService();
+        CourierRepository courierRepository = new CourierRepository();
+        DeliveryService deliveryService = new DeliveryService(courierRepository);
 
         ClientRepository clientRepository = new ClientRepository();
         ClientService clientService = new ClientService(clientRepository);
@@ -70,11 +68,12 @@ public class Main {
                     clientGUI.start();
                     break;
                 case 2:
-                    KitchenUI kitchenUI = new KitchenUI(orderService);
-                    kitchenUI.start();
+                    KitchenGUI kitchenGUI = new KitchenGUI(orderService);
+                    kitchenGUI.start();
                     break;
                 case 3:
-
+                    CourierGUI courierGUI = new CourierGUI(orderService);
+                    courierGUI.start();
                     break;
                 case 4:
                     AdminGUI adminGUI = new AdminGUI(pizzaService);

@@ -3,11 +3,11 @@ package org.example;
 import java.util.List;
 import java.util.Scanner;
 
-public class KitchenUI {
+public class KitchenGUI {
     private Scanner scanner;
     private OrderService orderService;
 
-    public KitchenUI(OrderService orderService) {
+    public KitchenGUI(OrderService orderService) {
         this.orderService = orderService;
         this.scanner = new Scanner(System.in);
     }
@@ -15,7 +15,7 @@ public class KitchenUI {
     public void start() {
 
         while (true) {
-            List<Order> orders = orderService.getOrdersByStatusForKitchen();
+            List<Order> orders = orderService.getOrdersByStatus(order -> order.getStatus() == Order.Status.CONFIRMED || order.getStatus() == Order.Status.COOKING);
             System.out.println("_____________________________________________________________");
             System.out.println("Список заказов: ");
             displayOrders(orders);
