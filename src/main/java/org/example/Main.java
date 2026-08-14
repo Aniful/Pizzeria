@@ -12,6 +12,8 @@ public class Main {
           Pizza margarita = new Pizza("Маргарита", 25, 400, new BigDecimal("450"), "Помидор, Сыр, Специи");
           Pizza hot = new Pizza("Острая", 30, 340, new BigDecimal("400"), "Лук, Перец, Чеснок");
 
+          Courier benTen = new Courier("Ben Ten", "71210001212");
+          Courier bobTen = new Courier("Bob Ten", "74440001414");
 //        System.out.println(margarita.getDescription());
 //
 //        Client andry = new Client("Andry", "89002008787");
@@ -37,7 +39,7 @@ public class Main {
         OrderRepository orderRepository = new OrderRepository();
         OrderService orderService = new OrderService(orderRepository);
         CourierRepository courierRepository = new CourierRepository();
-        DeliveryService deliveryService = new DeliveryService(courierRepository);
+        DeliveryService deliveryService = new DeliveryService(courierRepository, orderService);
 
         ClientRepository clientRepository = new ClientRepository();
         ClientService clientService = new ClientService(clientRepository);
@@ -49,6 +51,8 @@ public class Main {
         PaymentService paymentService = new PaymentService(paymentRepository, orderService);
         pizzaRepository.save(margarita);
         pizzaRepository.save(hot);
+        courierRepository.save(benTen);
+        courierRepository.save(bobTen);
 
         while (true) {
             System.out.println("_____________________________________________________________");
@@ -76,7 +80,7 @@ public class Main {
                     courierGUI.start();
                     break;
                 case 4:
-                    AdminGUI adminGUI = new AdminGUI(pizzaService);
+                    AdminGUI adminGUI = new AdminGUI(orderService, deliveryService, pizzaService);
                     adminGUI.start();
                     break;
                 default:

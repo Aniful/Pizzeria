@@ -58,9 +58,6 @@ public class Order {
     public Status getStatus() { return status; }
     public Long getId() { return id; }
 
-    public void setStatus(Status status) { this.status = status; }
-    public void setId(Long id) { this.id = id; }
-
     public String getDescription() {
         return String.format("Заказ №%d, будет доставлен по адресу: %s", id, address.getFullAddress());
     }
@@ -74,5 +71,9 @@ public class Order {
                         .map(Pizza::getName)
                         .collect(Collectors.joining(", ")));
     }
+
+    public void setStatus(Status status) { this.status = status; }
+    public void setId(Long id) { this.id = id; }
+    public void setCourierId(Long courierId) { this.courierId = courierId;}
 }
 

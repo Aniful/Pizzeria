@@ -2,62 +2,42 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DeliveryService {
-    private List<Courier> couriers = new ArrayList<>();
     private CourierRepository courierRepository;
+    private  OrderService orderService;
 
-    public DeliveryService(CourierRepository courierRepository){
+    public DeliveryService(CourierRepository courierRepository, OrderService orderService){
         this.courierRepository = courierRepository;
+        this.orderService = orderService;
     }
 
-    public void addCourier(String name, String numberPhone) {
-        Courier courier = new Courier(name, numberPhone);
-        couriers.add(courier);
+    public List<Courier> getAvailableCouriers() {
+        return courierRepository.getAvailableCouriers();
     }
 
-    public Courier findCourierByID(Long id) {
-        for (Courier courier : couriers) {
-            if (courier.getId().equals(id)) return courier;
-        }
-        return null;
-    }
+    public void assignCourierToOrder(Long orderId, Long courierId) {
+        Order order = orderService.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Заказ не найден"));
 
-    public void assignCourier(Order order){
-        Courier availableCourier = findAvailableCourier();
+        Courier courier = courierRepository.findById(courierId)
+                .orElseThrow(() -> new RuntimeException("Курьер не найден"));
 
-        if (availableCourier != null) {
-//            order.setCounterID(availableCourier.getId());
-//            availableCourier.setAvailable(false);
-        } else {
-            System.out.println("Свободные курьеры отсутствуют");
+        if (courier.isAvailable() == false) {
+            //исключение
         }
 
-    }
-
-    private Courier findAvailableCourier() {
-        Courier availableCourier = null;
-
-        for (Courier courier : couriers) {
-            if (courier.getIsAvailable()) {
-                availableCourier = courier;
-            }
+        if (order.getStatus() != Order.Status.READY) {
+            //исключение
         }
-        return availableCourier;
-    }
 
-    public void startDelivery(Order order) {
-        if (order.getStatus().isCOOKING()) {
-            order.setStatus(Order.Status.DELIVERING);
-        }
-    }
+        order.setCourierId(courierId);
+        order.setStatus(Order.Status.DELIVERING);
+        courier.setAvailable(false);
 
-    public void completeDelivery(Order order) {
-        if (order.getStatus().isDELIVERING()) {
-            order.setStatus(Order.Status.COMPLETED);
-//            Courier courier = findCourierByID( order.getCourierID() );
-//            courier.setAvailable(true);
-//            System.out.printf("Заказ №%s доставлен!\n", order.getId());
-        }
+        orderService.updateOrder(order);
+        courierRepository.save(courier);
     }
 }
+

@@ -1,18 +1,16 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Courier {
     private Long id;
     private String name;
     private String numberPhone;
-    private List deliveryHistory;
+    private List<Long> deliveryHistory = new ArrayList<>();
     private boolean isAvailable;
 
-    private static Long counterID = 0l;
-
     public Courier(String name, String numberPhone) {
-        id = ++counterID;
         this.name = name;
         this.numberPhone = numberPhone;
         isAvailable = true;
@@ -21,7 +19,7 @@ public class Courier {
 
     public String getName() { return name; }
     public String getNumberPhone() { return numberPhone; }
-    public boolean getIsAvailable() { return isAvailable; }
+    public boolean isAvailable() { return isAvailable; }
     public Long getId() { return id; }
 
     public void setAvailable(boolean available) {
@@ -32,4 +30,7 @@ public class Courier {
         this.id = id;
     }
 
+    public void addDeliveredOrder(Long orderId) {
+        deliveryHistory.add(orderId);
+    }
 }
