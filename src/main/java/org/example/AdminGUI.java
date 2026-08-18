@@ -22,6 +22,7 @@ public class AdminGUI {
             System.out.println("Выберите действие:");
             System.out.println("1. Назначить курьера");
             System.out.println("2. Добавить пиццу");
+            System.out.println("3. Добавить курьера");
             System.out.println("0. Выйти");
             System.out.println("_____________________________________________________________");
 

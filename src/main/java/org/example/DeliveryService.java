@@ -39,5 +39,13 @@ public class DeliveryService {
         orderService.updateOrder(order);
         courierRepository.save(courier);
     }
+
+    public List<Courier> findAllCouriers() {
+        return courierRepository.findAll();
+    }
+
+    public void updateCourier(Courier courier) {
+        courierRepository.save(courier);
+    }
 }
 

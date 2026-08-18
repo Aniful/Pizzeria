@@ -9,35 +9,15 @@ public class Main {
     static void main() {
         Scanner scanner = new Scanner(System.in);
 
-          Pizza margarita = new Pizza("Маргарита", 25, 400, new BigDecimal("450"), "Помидор, Сыр, Специи");
-          Pizza hot = new Pizza("Острая", 30, 340, new BigDecimal("400"), "Лук, Перец, Чеснок");
+        Pizza margarita = new Pizza("Маргарита", 25, 400, new BigDecimal("450"), "Помидор, Сыр, Специи");
+        Pizza hot = new Pizza("Острая", 30, 340, new BigDecimal("400"), "Лук, Перец, Чеснок");
 
-          Courier benTen = new Courier("Ben Ten", "71210001212");
-          Courier bobTen = new Courier("Bob Ten", "74440001414");
-//        System.out.println(margarita.getDescription());
-//
-//        Client andry = new Client("Andry", "89002008787");
-//        Address address1 = new Address("Пермь", "Ленина", "1", "7");
-//        List<Pizza> itemsOrder1 = new ArrayList<>();
-//        itemsOrder1.add(margarita);
-//
-//        Order order1 = new Order(andry, address1, itemsOrder1);
-//        Order order2 = new Order(andry, address1, itemsOrder1);
-//
-//        DeliveryService deliveryService = new DeliveryService();
-//        OrderService orderService = new OrderService();
-//
-//        order1.setStatus(Order.Status.CONFIRMED);
-//
-//        deliveryService.addCourier("Kiril", "85673338987");
-//        deliveryService.assignCourier(order1);
-//
-//        orderService.sendCook(order1);
-//        deliveryService.startDelivery(order1);
-//
-//        deliveryService.completeDelivery(order1);
+        Courier benTen = new Courier("Ben Ten", "71210001212");
+        Courier bobTen = new Courier("Bob Ten", "74440001414");
+
         OrderRepository orderRepository = new OrderRepository();
         OrderService orderService = new OrderService(orderRepository);
+
         CourierRepository courierRepository = new CourierRepository();
         DeliveryService deliveryService = new DeliveryService(courierRepository, orderService);
 
@@ -49,6 +29,7 @@ public class Main {
 
         PaymentRepository paymentRepository = new PaymentRepository();
         PaymentService paymentService = new PaymentService(paymentRepository, orderService);
+
         pizzaRepository.save(margarita);
         pizzaRepository.save(hot);
         courierRepository.save(benTen);
@@ -76,7 +57,7 @@ public class Main {
                     kitchenGUI.start();
                     break;
                 case 3:
-                    CourierGUI courierGUI = new CourierGUI(orderService);
+                    CourierGUI courierGUI = new CourierGUI(deliveryService, orderService);
                     courierGUI.start();
                     break;
                 case 4:
@@ -87,6 +68,5 @@ public class Main {
                     System.out.println("Введенного значения не предусмотрено");
             }
         }
-
     }
 }
