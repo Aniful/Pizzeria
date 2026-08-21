@@ -32,4 +32,6 @@ public class OrderService {
     public List<Order> getOrdersByStatus(Predicate<Order> p) {
         return orderRepository.getOrdersByStatus(p);
     }
+
+    public  List<Order> getOrdersForCourier(Long courierId) { return orderRepository.getOrdersForCourier(courierId); }
 }

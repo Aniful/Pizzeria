@@ -26,4 +26,11 @@ public class OrderRepository {
                 .filter(p)
                 .toList();
     }
+
+    public List<Order> getOrdersForCourier(Long courierId) {
+        return orders.values().stream()
+                .filter(order -> order.getStatus() == Order.Status.DELIVERING)
+                .filter(order -> order.getCourierId().equals(courierId))
+                .toList();
+    }
 }

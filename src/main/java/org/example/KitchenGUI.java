@@ -21,6 +21,7 @@ public class KitchenGUI {
             displayOrders(orders);
             System.out.println("0. Выйти");
             System.out.println("Введите номер для изменения статуса:");
+            System.out.println("_____________________________________________________________");
 
             int userChoice = scanner.nextInt();
             scanner.nextLine();
@@ -33,6 +34,7 @@ public class KitchenGUI {
                 Order order = orders.get(userChoice - 1);
                 changeOrderStatus(order);
             } else {
+                System.out.println("_____________________________________________________________");
                 System.out.println("Введен неверный номер");
             }
         }

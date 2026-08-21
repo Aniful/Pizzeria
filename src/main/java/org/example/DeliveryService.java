@@ -47,5 +47,25 @@ public class DeliveryService {
     public void updateCourier(Courier courier) {
         courierRepository.save(courier);
     }
+
+    public void completeDelivery(Long orderId, Long courierId) {
+        Order order = orderService.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Заказ не найден"));
+
+        Courier courier = courierRepository.findById(courierId)
+                .orElseThrow(() -> new RuntimeException("Курьер не найден"));
+
+        if (order.getStatus() != Order.Status.DELIVERING) {
+            //можно бросить Исключение
+            System.out.println("Заказ №" + order.getId() + " не передан в доставку, его статус - " + order.getStatus());
+            return;
+        }
+
+        order.setStatus(Order.Status.COMPLETED);
+        courier.setAvailable(true);
+
+        orderService.updateOrder(order);
+        courierRepository.save(courier);
+    }
 }
 

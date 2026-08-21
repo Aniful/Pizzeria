@@ -18,31 +18,28 @@ public class CourierGUI {
     }
 
     public void start() {
-        login();
+        boolean isLogin = login();
 
-        while (true) {
-            System.out.println("Меню. Текущий курьер: " + currentCourier.getName());
-            System.out.println("1. Показать мои заказы");
-            System.out.println("2. Завершить доставку");
-            System.out.println("0. Выйти");
+        if (isLogin) {
+            openCourierMenu();
         }
     }
 
-    private void login() {
+    private boolean login() {
         while (true) {
             Optional<Courier> courier = selectCourier();
 
             if (courier.isPresent()) {
                 currentCourier = courier.get();
             } else {
-                System.out.println("Курьер не выбран, попробуйте еще раз");
-                continue;
+                System.out.println("Курьер не выбран");
+                return false;
             }
 
             if (currentCourier.hasPassword()) {
                 if (checkPassword()) {
                     System.out.println("Добро пожаловать, " + currentCourier.getName());
-                    return;
+                    return true;
                 } else {
                     System.out.println("Попробуйте еще раз");
                 }
@@ -50,7 +47,7 @@ public class CourierGUI {
             } else {
                 setupNewPassword(currentCourier);
                 System.out.println("Добро пожаловать, " + currentCourier.getName());
-                return;
+                return true;
             }
         }
     }
@@ -103,5 +100,45 @@ public class CourierGUI {
         deliveryService.updateCourier(courier);
         System.out.println("Установлен новый пароль");
         System.out.println("_____________________________________________________________");
+    }
+
+    private void openCourierMenu() {
+        while (true) {
+            List<Order> orders = orderService.getOrdersForCourier(currentCourier.getId());
+
+            System.out.println("_____________________________________________________________");
+            System.out.println("МЕНЮ. Текущий курьер: " + currentCourier.getName());
+            System.out.println("Здесь перечислены все ваши заказы готовые к доставке:");
+            showOrdersForDelivery(orders);
+            System.out.println("0. Выйти");
+            System.out.println("Введите номер для изменения статуса:");
+            System.out.println("_____________________________________________________________");
+
+            int userChoice = scanner.nextInt();
+            scanner.nextLine();
+
+            if (userChoice == 0) {
+                return;
+            }
+
+            if (userChoice > 0 && userChoice <= orders.size()) {
+                Order order = orders.get(userChoice - 1);
+                changeOrderStatus(order);
+            } else {
+                System.out.println("_____________________________________________________________");
+                System.out.println("Введен неверный номер");
+            }
+        }
+    }
+
+    private void showOrdersForDelivery(List<Order> orders) {
+        for (int i = 0; i < orders.size(); i++) {
+            Order order = orders.get(i);
+            System.out.println((i + 1) + ". " + order.getOrderSummary() + ". Адрес: " + order.getAddress());
+        }
+    }
+    private void changeOrderStatus(Order order) {
+        deliveryService.completeDelivery(order.getId(), currentCourier.getId());
+        System.out.println("Статус изменен на - COMPLETED");
     }
 }

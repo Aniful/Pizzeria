@@ -57,6 +57,7 @@ public class Order {
     public String getAddress() { return address.getFullAddress(); }
     public Status getStatus() { return status; }
     public Long getId() { return id; }
+    public Long getCourierId() { return courierId; }
 
     public String getDescription() {
         return String.format("Заказ №%d, будет доставлен по адресу: %s", id, address.getFullAddress());

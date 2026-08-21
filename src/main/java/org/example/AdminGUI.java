@@ -106,7 +106,7 @@ public class AdminGUI {
     private void assignCourierToOrder(Order order) {
         List<Courier> couriers = displayAvailableCouriers();
 
-        if (couriers.isEmpty()) { return;}
+        if (couriers.isEmpty() || couriers == null) { return;}
 
         int userChoice = scanner.nextInt();
         scanner.nextLine();
@@ -124,13 +124,18 @@ public class AdminGUI {
 
     private List<Courier> displayAvailableCouriers() {
         System.out.println("_____________________________________________________________");
-        System.out.println("Свободные курьеры:");
         List<Courier> availableCouriers = deliveryService.getAvailableCouriers();
-        for (int i = 0; i < availableCouriers.size(); i++) {
-            System.out.println((i + 1) + ". " + availableCouriers.get(i).getName());
+
+        if (availableCouriers.isEmpty()) {
+            System.out.println("На данный момент свободных курьеров нет, попробуйте позже");
+        } else {
+            System.out.println("Свободные курьеры:");
+            for (int i = 0; i < availableCouriers.size(); i++) {
+                System.out.println((i + 1) + ". " + availableCouriers.get(i).getName());
+            }
+            System.out.println("0. Вернуться к заказам");
         }
-        System.out.println("0. Вернуться к заказам");
-        System.out.println("_____________________________________________________________");
+
         return availableCouriers;
     }
 }
