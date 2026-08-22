@@ -108,26 +108,65 @@ public class CourierGUI {
 
             System.out.println("_____________________________________________________________");
             System.out.println("МЕНЮ. Текущий курьер: " + currentCourier.getName());
-            System.out.println("Здесь перечислены все ваши заказы готовые к доставке:");
-            showOrdersForDelivery(orders);
+            System.out.println("1. Текущие заказы");
+            System.out.println("2. История заказов");
             System.out.println("0. Выйти");
-            System.out.println("Введите номер для изменения статуса:");
             System.out.println("_____________________________________________________________");
 
             int userChoice = scanner.nextInt();
             scanner.nextLine();
 
-            if (userChoice == 0) {
-                return;
+            switch (userChoice) {
+                case 1:
+                    currentOrders(orders);
+                    break;
+                case 2:
+                    showDeliveryHistory();
+                    break;
+                case 0:
+                    System.out.println("Выход в меню");
+                    return;
+                default:
+                    System.out.println("Введенного значения не предусмотрено");
             }
+        }
+    }
 
-            if (userChoice > 0 && userChoice <= orders.size()) {
-                Order order = orders.get(userChoice - 1);
-                changeOrderStatus(order);
-            } else {
-                System.out.println("_____________________________________________________________");
-                System.out.println("Введен неверный номер");
-            }
+    public void currentOrders(List<Order> orders) {
+        System.out.println("Здесь перечислены все ваши заказы готовые к доставке:");
+        showOrdersForDelivery(orders);
+        System.out.println("0. Выйти");
+        System.out.println("Введите номер для изменения статуса:");
+        System.out.println("_____________________________________________________________");
+
+        int userChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        if (userChoice == 0) {
+            return;
+        }
+
+        if (userChoice > 0 && userChoice <= orders.size()) {
+            Order order = orders.get(userChoice - 1);
+            changeOrderStatus(order);
+        } else {
+            System.out.println("_____________________________________________________________");
+            System.out.println("Введен неверный номер");
+        }
+    }
+
+    public void showDeliveryHistory() {
+        List<Order> ordersFromDeliveryHistory = deliveryService.getDeliveryHistoryForCourier(currentCourier.getId());
+        System.out.println("_____________________________________________________________");
+        if (ordersFromDeliveryHistory.isEmpty()) {
+            System.out.println("История заказов пуста.");
+            return;
+        }
+
+        System.out.println("ИСТОРИЯ ЗАКАЗОВ");
+        int nummer = 1;
+        for (Order order : ordersFromDeliveryHistory) {
+            System.out.println(nummer++ + ". " + order.getOrderSummary());
         }
     }
 

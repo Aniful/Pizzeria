@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,16 @@ public class OrderRepository {
         return orders.values().stream()
                 .filter(order -> order.getStatus() == Order.Status.DELIVERING)
                 .filter(order -> order.getCourierId().equals(courierId))
+                .toList();
+    }
+
+    public List<Order> getOrdersById(List<Long> ordersId) {
+        if (ordersId.isEmpty() || ordersId == null) {
+            return Collections.emptyList();
+        }
+
+        return orders.values().stream()
+                .filter(order -> ordersId.contains(order.getId()))
                 .toList();
     }
 }

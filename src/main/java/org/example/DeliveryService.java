@@ -1,8 +1,6 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class DeliveryService {
     private CourierRepository courierRepository;
@@ -64,8 +62,22 @@ public class DeliveryService {
         order.setStatus(Order.Status.COMPLETED);
         courier.setAvailable(true);
 
+        courier.addDeliveredOrder(orderId);
+
         orderService.updateOrder(order);
         courierRepository.save(courier);
+    }
+
+    public List<Order> getDeliveryHistoryForCourier(Long courierId) {
+        Courier courier = courierRepository.findById(courierId)
+                .orElseThrow(() -> new RuntimeException("Курьер не найден"));
+
+        List<Long> idOrdersFromDeliveryHistory = courier.getDeliveryHistory();
+        if (idOrdersFromDeliveryHistory.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return orderService.getOrdersById(idOrdersFromDeliveryHistory);
     }
 }
 

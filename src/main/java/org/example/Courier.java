@@ -22,6 +22,7 @@ public class Courier {
     public String getNumberPhone() { return numberPhone; }
     public boolean isAvailable() { return isAvailable; }
     public Long getId() { return id; }
+    public List<Long> getDeliveryHistory() { return deliveryHistory; }
 
     public void setAvailable(boolean available) {
         isAvailable = available;
