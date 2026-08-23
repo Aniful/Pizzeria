@@ -16,9 +16,6 @@ public class Order {
     private Status status;
     private BigDecimal totalPrice;
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER =
-            DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-
     public enum Status {
         NEW,
         CONFIRMED,
@@ -41,6 +38,9 @@ public class Order {
         }
     }
 
+    private static final DateTimeFormatter DATE_TIME_FORMATTER =
+            DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
     public Order(Long clientId, Address address, List<Pizza> items) {
         this.clientId = clientId;
         this.address = address;
@@ -52,12 +52,6 @@ public class Order {
         status = Status.NEW;
         this.createdAt = LocalDateTime.now();
     }
-
-    public BigDecimal getTotalPrice() { return totalPrice; }
-    public String getAddress() { return address.getFullAddress(); }
-    public Status getStatus() { return status; }
-    public Long getId() { return id; }
-    public Long getCourierId() { return courierId; }
 
     public String getDescription() {
         return String.format("Заказ №%d, будет доставлен по адресу: %s", id, address.getFullAddress());
@@ -73,8 +67,14 @@ public class Order {
                         .collect(Collectors.joining(", ")));
     }
 
-    public void setStatus(Status status) { this.status = status; }
-    public void setId(Long id) { this.id = id; }
+    public Long getId()             { return id; }
+    public Status getStatus()       { return status; }
+    public Long getCourierId()      { return courierId; }
+    public String getAddress()      { return address.getFullAddress(); }
+    public BigDecimal getTotalPrice() { return totalPrice; }
+
+    public void setId(Long id)              { this.id = id; }
+    public void setStatus(Status status)    { this.status = status; }
     public void setCourierId(Long courierId) { this.courierId = courierId;}
 }
 

@@ -24,27 +24,22 @@ public class Pizza {
         return id + " " + name;
     }
 
-    public Long getId() { return id; }
-    public String getName() { return name; }
-    public BigDecimal getCurrentPrice() { return currentPrice; }
-    public String getIngredients() { return ingredients; }
-
     public String getDescription() {
         return String.format("Пицца %s %dсм, %dг. Цена: %.2fр", name, diametr, weigth, currentPrice);
     }
 
-    public void setName(String name) {
-        if (name != "") {
-            this.name = name;
-        }
-    }
+    public Long getId()             { return id; }
+    public String getName()         { return name; }
+    public String getIngredients()  { return ingredients; }
+    public BigDecimal getCurrentPrice() { return currentPrice; }
 
     public  void setId(Long id) {
         this.id = id;
     }
-
-    public void setCurrentPrice(BigDecimal currentPrice) {
-
-        this.currentPrice = currentPrice;
+    public void setCurrentPrice(BigDecimal currentPrice) { this.currentPrice = currentPrice; }
+    public void setName(String name) {
+        if (name != "") {
+            this.name = name;
+        }
     }
 }

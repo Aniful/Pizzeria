@@ -16,12 +16,18 @@ public class Address {
         this.apartment = apartment;
     }
 
-    public Long   getId() { return id; }
-    public String getCity() { return city; }
-    public String getStreet() { return street; }
-    public String getHome() { return home; }
-    public String getApartment() { return apartment; }
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj) return true;
+//        if (obj == null || getClass() != obj.getClass()) return false;
+//        Address address = (Address) obj;
+//    }
 
+    public Long   getId()       { return id; }
+    public String getCity()     { return city; }
+    public String getStreet()   { return street; }
+    public String getHome()     { return home; }
+    public String getApartment() { return apartment; }
     public String getFullAddress() {
         return String.format("%s, ул. %s, д. %s кв. %s", city, street, home, apartment);
     }
@@ -29,11 +35,4 @@ public class Address {
     public void setId(Long id) {
         this.id = id;
     }
-
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (this == obj) return true;
-//        if (obj == null || getClass() != obj.getClass()) return false;
-//        Address address = (Address) obj;
-//    }
 }

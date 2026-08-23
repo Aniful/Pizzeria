@@ -36,6 +36,8 @@ public class AdminGUI {
                 case 2:
                     addPizza();
                     break;
+                case 3:
+                    addCourier();
                 case 0:
                     return;
                 default:
@@ -66,6 +68,20 @@ public class AdminGUI {
         System.out.print("Добавлена новая позиция: " + currentPizza.getDescription());
         System.out.println("Состав: " + currentPizza.getIngredients());
         System.out.println("_____________________________________________________________");
+    }
+
+    public void addCourier() {
+        try {
+            System.out.println("_____________________________________________________________");
+            System.out.println("Введите ФИО нового сотрудника:");
+            String name = scanner.nextLine();
+            System.out.println("Укажите номер телефона:");
+            String numberPhone = scanner.nextLine();
+            Courier courier = deliveryService.addCourier(name, numberPhone);
+            System.out.println("Добавлен новый курьер: " + courier.getName());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
     }
 
     private void selectOrderForCourier() {

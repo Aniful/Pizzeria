@@ -11,6 +11,21 @@ public class DeliveryService {
         this.orderService = orderService;
     }
 
+    public Courier addCourier(String name, String numberPhone) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Имя не может быть пустым");
+        }
+        if (numberPhone == null || numberPhone.trim().isEmpty()) {
+            throw new IllegalArgumentException("Номер телефона не может быть пустым");
+        }
+        if (courierRepository.findByPhone(numberPhone).isPresent()) {
+            throw new IllegalArgumentException("Курьер с таким номером телефона уже зарегистрирован");
+        }
+
+        Courier courier = new Courier(name, numberPhone);
+        return courierRepository.save(courier);
+    }
+
     public List<Courier> getAvailableCouriers() {
         return courierRepository.getAvailableCouriers();
     }

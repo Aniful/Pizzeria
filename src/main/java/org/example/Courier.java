@@ -18,20 +18,6 @@ public class Courier {
         isAvailable = true;
     }
 
-    public String getName() { return name; }
-    public String getNumberPhone() { return numberPhone; }
-    public boolean isAvailable() { return isAvailable; }
-    public Long getId() { return id; }
-    public List<Long> getDeliveryHistory() { return deliveryHistory; }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public boolean hasPassword() {
         return password != null && !password.isEmpty();
     }
@@ -54,5 +40,18 @@ public class Courier {
 
     public void addDeliveredOrder(Long orderId) {
         deliveryHistory.add(orderId);
+    }
+
+    public Long getId()             { return id; }
+    public String getName()         { return name; }
+    public String getNumberPhone()  { return numberPhone; }
+    public boolean isAvailable()    { return isAvailable; }
+    public List<Long> getDeliveryHistory() { return deliveryHistory; }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 }

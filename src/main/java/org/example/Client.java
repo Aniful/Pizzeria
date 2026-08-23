@@ -13,23 +13,9 @@ public class Client {
     private List<Address> addressHistory = new ArrayList<>();
     private Long counterAddressId = 0l;
 
-
     public Client(String name, String numberPhone) {
         this.name = name;
         this.numberPhone = numberPhone;
-    }
-
-    public Long getId() { return id; }
-    public String getName() { return name; }
-    public String getNumberPhone() { return numberPhone; }
-    public List<Address> getAddressHistory() { return addressHistory; }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setBiethDate(Date biethDate) {
-        this.biethDate = biethDate;
     }
 
     public void addAddress(Address address) {
@@ -37,4 +23,15 @@ public class Client {
             addressHistory.add(address);
     }
 
+    public Long getId()             { return id; }
+    public String getName()         { return name; }
+    public String getNumberPhone()  { return numberPhone; }
+    public List<Address> getAddressHistory() { return addressHistory; }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public void setBiethDate(Date biethDate) {
+        this.biethDate = biethDate;
+    }
 }

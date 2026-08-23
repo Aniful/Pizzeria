@@ -11,11 +11,11 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public Optional<Order> findById(Long id) { return orderRepository.findById(id); }
-
     public Order updateOrder(Order order) {
-            return orderRepository.save(order);
+        return orderRepository.save(order);
     }
+
+    public Optional<Order> findById(Long id) { return orderRepository.findById(id); }
 
     public Order makeOrder(Long clientId, Address address, List<Pizza> items) {
         Order order = new Order(clientId, address, items);
@@ -23,17 +23,13 @@ public class OrderService {
         return order;
     }
 
-    public void sendCook(Order order){
-        if (order.getStatus().isCONFIRMED()) {
-            order.setStatus(Order.Status.COOKING);
-        }
-    }
-
     public List<Order> getOrdersByStatus(Predicate<Order> p) {
         return orderRepository.getOrdersByStatus(p);
     }
 
-    public  List<Order> getOrdersForCourier(Long courierId) { return orderRepository.getOrdersForCourier(courierId); }
+    public  List<Order> getOrdersForCourier(Long courierId) {
+        return orderRepository.getOrdersForCourier(courierId);
+    }
 
     public List<Order> getOrdersById(List<Long> ordersId) {
         return orderRepository.getOrdersById(ordersId);

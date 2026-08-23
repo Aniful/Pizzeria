@@ -26,6 +26,12 @@ public class CourierRepository {
         return Optional.ofNullable(couriers.get(id));
     }
 
+    public Optional<Courier> findByPhone(String numberPhoneNewCourier) {
+        return couriers.values().stream()
+                .filter(courier -> courier.getNumberPhone().equals(numberPhoneNewCourier))
+                .findFirst();
+    }
+
     public  List<Courier> findAll() {
         return couriers.values().stream().toList();
     }
