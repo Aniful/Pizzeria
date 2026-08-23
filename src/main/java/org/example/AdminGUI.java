@@ -21,8 +21,9 @@ public class AdminGUI {
         while (true) {
             System.out.println("Выберите действие:");
             System.out.println("1. Назначить курьера");
-            System.out.println("2. Добавить пиццу");
+            System.out.println("2. Список курьеров");
             System.out.println("3. Добавить курьера");
+            System.out.println("4. Добавить пиццу");
             System.out.println("0. Выйти");
             System.out.println("_____________________________________________________________");
 
@@ -34,10 +35,14 @@ public class AdminGUI {
                     selectOrderForCourier();
                     break;
                 case 2:
-                    addPizza();
+                    showAllCouriers();
                     break;
                 case 3:
                     addCourier();
+                    break;
+                case 4:
+                    addPizza();
+                    break;
                 case 0:
                     return;
                 default:
@@ -82,6 +87,24 @@ public class AdminGUI {
         } catch (IllegalArgumentException e) {
             System.out.println("Ошибка: " + e.getMessage());
         }
+    }
+
+    private void showAllCouriers() {
+        List<Courier> couriers = deliveryService.findAllCouriers();
+        System.out.println("_____________________________________________________________");
+        if (couriers.isEmpty()) {
+            System.out.println("Список курьеров пуст");
+        } else {
+            System.out.println("СПИСОК КУРЬЕРОВ");
+            for (Courier courier : couriers) {
+                String status = courier.isAvailable() ? "Свободен" : "Занят";
+                System.out.println(courier.getName() + " - " + status);
+            }
+        }
+        System.out.println("Нажмине enter чтобы выйти");
+        System.out.println("_____________________________________________________________");
+
+        scanner.nextLine();
     }
 
     private void selectOrderForCourier() {
