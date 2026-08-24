@@ -34,4 +34,8 @@ public class OrderService {
     public List<Order> getOrdersById(List<Long> ordersId) {
         return orderRepository.getOrdersById(ordersId);
     }
+
+    public  List<Order> getOrdersByClient(Long clientId) {
+        return orderRepository.getOrdersByClient(clientId);
+    }
 }

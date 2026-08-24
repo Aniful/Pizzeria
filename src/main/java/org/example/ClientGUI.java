@@ -44,6 +44,7 @@ public class ClientGUI {
                     }
                     break;
                 case 2:
+                    showClientOrders();
                     break;
                 case 0:
                     return;
@@ -208,5 +209,24 @@ public class ClientGUI {
             }
         }
         return method;
+    }
+
+    private void showClientOrders() {
+        List<Order> orders = orderService.getOrdersByClient(currentClient.getId());
+
+        if (orders.isEmpty()) {
+            System.out.println("Список заказов пуст");
+            return;
+        }
+
+        System.out.println("ВАШИ ЗАКАЗЫ");
+        for (int i = 0; i < orders.size(); i++) {
+            System.out.println(orders.get(i).getOrderSummary());
+        }
+
+        System.out.println("Нажмине enter чтобы выйти");
+        System.out.println("_____________________________________________________________");
+
+        scanner.nextLine();
     }
 }

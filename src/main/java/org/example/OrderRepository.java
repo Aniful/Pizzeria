@@ -1,9 +1,6 @@
 package org.example;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class OrderRepository {
@@ -43,5 +40,12 @@ public class OrderRepository {
         return orders.values().stream()
                 .filter(order -> ordersId.contains(order.getId()))
                 .toList();
+    }
+
+    public List<Order> getOrdersByClient(Long clientId) {
+        return orders.values().stream()
+                .filter(order -> order.getClientId().equals(clientId))
+                .sorted(Comparator.comparing(Order::getCreatedAt))
+                .toList().reversed();
     }
 }

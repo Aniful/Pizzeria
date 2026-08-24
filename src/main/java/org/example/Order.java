@@ -58,9 +58,10 @@ public class Order {
     }
 
     public String getOrderSummary() {
-        return  String.format("Заказ №%d от %s - %s;   %s",
+        return  String.format("Заказ №%d от %s на сумму %sр. - %s;   %s",
                 id,
                 createdAt.format(DATE_TIME_FORMATTER),
+                totalPrice,
                 status,
                 items.stream()
                         .map(Pizza::getName)
@@ -69,9 +70,11 @@ public class Order {
 
     public Long getId()             { return id; }
     public Status getStatus()       { return status; }
+    public Long getClientId()       { return clientId; }
     public Long getCourierId()      { return courierId; }
     public String getAddress()      { return address.getFullAddress(); }
     public BigDecimal getTotalPrice() { return totalPrice; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 
     public void setId(Long id)              { this.id = id; }
     public void setStatus(Status status)    { this.status = status; }
