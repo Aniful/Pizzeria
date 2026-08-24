@@ -46,6 +46,9 @@ public class ClientGUI {
                 case 2:
                     showClientOrders();
                     break;
+                case 3:
+                    showIngredients();
+                    break;
                 case 0:
                     return;
                 default:
@@ -226,6 +229,27 @@ public class ClientGUI {
 
         System.out.println("Нажмине enter чтобы выйти");
         System.out.println("_____________________________________________________________");
+
+        scanner.nextLine();
+    }
+
+    private void showIngredients() {
+        List<Pizza> pizzas = pizzaService.getMenu();
+        System.out.println("_____________________________________________________________");
+        System.out.println("Здесь можно узнать состав пиццы");
+
+        if (pizzas.isEmpty()) {
+            System.out.println("Список пиццы пуст");
+            return;
+        }
+
+        for (int i = 0; i < pizzas.size(); i++) {
+            Pizza pizza = pizzas.get(i);
+            System.out.printf("%d. %-15s | Состав: %s%n",
+                    i + 1, pizza.getName(), pizza.getIngredients());
+        }
+
+        System.out.println("Нажмине enter чтобы выйти");
 
         scanner.nextLine();
     }
