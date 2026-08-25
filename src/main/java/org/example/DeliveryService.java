@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.exception.OrderNotInDeliveryException;
+import org.example.exception.InvalidOrderStatusException;
 
 import java.util.*;
 
@@ -44,7 +44,7 @@ public class DeliveryService {
         }
 
         if (order.getStatus() != Order.Status.READY) {
-            //исключение
+            throw new InvalidOrderStatusException(orderId, order.getStatus(), Order.Status.READY);
         }
 
         order.setCourierId(courierId);
@@ -71,7 +71,7 @@ public class DeliveryService {
                 .orElseThrow(() -> new RuntimeException("Курьер не найден"));
 
         if (order.getStatus() != Order.Status.DELIVERING) {
-            throw new OrderNotInDeliveryException(orderId, order.getStatus());
+            throw new InvalidOrderStatusException(orderId, order.getStatus(), Order.Status.DELIVERING);
         }
 
         order.setStatus(Order.Status.COMPLETED);
