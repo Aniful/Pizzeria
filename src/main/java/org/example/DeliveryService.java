@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.exception.CourierAlreadyBusyException;
 import org.example.exception.InvalidOrderStatusException;
 
 import java.util.*;
@@ -40,7 +41,7 @@ public class DeliveryService {
                 .orElseThrow(() -> new RuntimeException("Курьер не найден"));
 
         if (courier.isAvailable() == false) {
-            //исключение
+            throw new CourierAlreadyBusyException(courier.getName());
         }
 
         if (order.getStatus() != Order.Status.READY) {
