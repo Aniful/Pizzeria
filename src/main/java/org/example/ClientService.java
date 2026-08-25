@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.exception.ClientNotFoundException;
+
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -25,13 +27,9 @@ public class ClientService {
     }
 
     public void addAddressToClient(Long clientId, Address address) {
-        Optional<Client> optionalClient = clientRepository.findById(clientId);
-        if (optionalClient.isEmpty()) {
-            System.out.println("При попытке добавить адрес клиенту. Клиент не найден.");
-        } else {
-            Client client = optionalClient.get();
-            client.addAddress(address);
-            clientRepository.save(client);
-        }
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ClientNotFoundException(clientId));
+        client.addAddress(address);
+        clientRepository.save(client);
     }
 }
