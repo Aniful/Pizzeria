@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.exception.OrderNotInDeliveryException;
+
 import java.util.*;
 
 public class DeliveryService {
@@ -69,9 +71,7 @@ public class DeliveryService {
                 .orElseThrow(() -> new RuntimeException("Курьер не найден"));
 
         if (order.getStatus() != Order.Status.DELIVERING) {
-            //можно бросить Исключение
-            System.out.println("Заказ №" + order.getId() + " не передан в доставку, его статус - " + order.getStatus());
-            return;
+            throw new OrderNotInDeliveryException(orderId, order.getStatus());
         }
 
         order.setStatus(Order.Status.COMPLETED);
